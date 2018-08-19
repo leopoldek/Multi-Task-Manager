@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/task_graph/task_manager.gd" type="Script" id=1]
+[ext_resource path="res://addons/task_graph/task_manager_icon.png" type="Texture" id=2]
+
+[node name="TaskManager" type="Node" index="0"]
+
+script = ExtResource( 1 )
+__meta__ = {
+"_editor_icon": ExtResource( 2 )
+}
+max_threads = 0
+
+
