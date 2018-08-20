@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://test.gd" type="Script" id=1]
+[ext_resource path="res://example/test.gd" type="Script" id=1]
 [ext_resource path="res://addons/task_graph/task_manager.gd" type="Script" id=2]
 [ext_resource path="res://addons/task_graph/task_manager_icon.png" type="Texture" id=3]
-[ext_resource path="res://task_test.tres" type="Resource" id=4]
+[ext_resource path="res://example/task_test.tres" type="Resource" id=4]
 
 [node name="Test" type="Node" index="0"]
 

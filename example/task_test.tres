@@ -10,12 +10,12 @@ __meta__ = {
 "_editor_icon": ExtResource( 1 )
 }
 nodes = [ {
-"data": "res://task1.gd",
+"data": "res://example/task1.gd",
 "position": [ 120.0, -240.0 ],
 "type": 0,
 "width": 273.0
 }, {
-"data": "res://task1.gd",
+"data": "res://example/task1.gd",
 "position": [ 420.0, -200.0 ],
 "type": 0,
 "width": 273.0
@@ -25,13 +25,8 @@ nodes = [ {
 "type": 1,
 "width": 200.0
 }, {
-"data": "res://task2.gd",
+"data": "res://example/task2.gd",
 "position": [ 740.0, -200.0 ],
-"type": 0,
-"width": 273.0
-}, {
-"data": "res://task1.gd",
-"position": [ 1040.0, -200.0 ],
 "type": 0,
 "width": 273.0
 }, {
@@ -40,27 +35,17 @@ nodes = [ {
 "type": 2,
 "width": 200.0
 }, {
-"data": "res://task3.gd",
+"data": "res://example/task3.gd",
 "position": [ 1340.0, -120.0 ],
 "type": 0,
 "width": 273.0
 }, {
-"data": "res://task3.gd",
+"data": "res://example/task3.gd",
 "position": [ 740.0, -60.0 ],
 "type": 0,
 "width": 273.0
 }, {
-"data": "res://task3.gd",
-"position": [ 420.0, -40.0 ],
-"type": 0,
-"width": 273.0
-}, {
-"data": "res://task3.gd",
-"position": [ 100.0, 240.0 ],
-"type": 0,
-"width": 273.0
-}, {
-"data": "res://task3.gd",
+"data": "res://example/task3.gd",
 "position": [ 100.0, 120.0 ],
 "type": 0,
 "width": 273.0
@@ -76,25 +61,55 @@ nodes = [ {
 "width": 200.0
 }, {
 "data": "input4",
-"position": [ -140.0, 180.0 ],
+"position": [ -140.0, 60.0 ],
 "type": 1,
 "width": 200.0
 }, {
 "data": "input5",
-"position": [ -140.0, 300.0 ],
+"position": [ -140.0, 180.0 ],
 "type": 1,
 "width": 200.0
+}, {
+"data": "res://example/task1.gd",
+"position": [ 1040.0, -200.0 ],
+"type": 0,
+"width": 273.0
+}, {
+"data": "res://example/task3.gd",
+"position": [ 420.0, -40.0 ],
+"type": 0,
+"width": 273.0
+}, {
+"data": "res://example/task3.gd",
+"position": [ 100.0, 0.0 ],
+"type": 0,
+"width": 273.0
 } ]
 connections = [ {
 "from": 12,
-"from_port": "input1",
-"to": 0,
+"from_port": "output1",
+"to": 4,
+"to_port": "output1"
+}, {
+"from": 12,
+"from_port": "output1",
+"to": 5,
 "to_port": "input1"
 }, {
-"from": 11,
-"from_port": "input2",
-"to": 0,
+"from": 3,
+"from_port": "output1",
+"to": 12,
+"to_port": "input1"
+}, {
+"from": 3,
+"from_port": "output1",
+"to": 12,
 "to_port": "input2"
+}, {
+"from": 2,
+"from_port": "input3",
+"to": 13,
+"to_port": "input1"
 }, {
 "from": 0,
 "from_port": "output1",
@@ -111,44 +126,29 @@ connections = [ {
 "to": 3,
 "to_port": "input1"
 }, {
-"from": 2,
-"from_port": "input3",
-"to": 8,
-"to_port": "input1"
-}, {
 "from": 1,
-"from_port": "output1",
-"to": 7,
-"to_port": "input1"
-}, {
-"from": 3,
-"from_port": "output1",
-"to": 4,
-"to_port": "input1"
-}, {
-"from": 3,
-"from_port": "output1",
-"to": 4,
-"to_port": "input2"
-}, {
-"from": 4,
-"from_port": "output1",
-"to": 5,
-"to_port": "output1"
-}, {
-"from": 4,
 "from_port": "output1",
 "to": 6,
 "to_port": "input1"
 }, {
-"from": 13,
+"from": 10,
 "from_port": "input4",
-"to": 10,
+"to": 14,
 "to_port": "input1"
 }, {
-"from": 14,
+"from": 11,
 "from_port": "input5",
-"to": 9,
+"to": 7,
 "to_port": "input1"
+}, {
+"from": 9,
+"from_port": "input1",
+"to": 0,
+"to_port": "input1"
+}, {
+"from": 8,
+"from_port": "input2",
+"to": 0,
+"to_port": "input2"
 } ]
 
