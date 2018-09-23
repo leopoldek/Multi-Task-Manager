@@ -56,3 +56,19 @@ static func _inputs():
 static func _outputs():
     return ["output1", "output2"]
 ```
+### Progress Polling
+You can get the progression of the manager by calling `TaskManager.get_progress()`. This will return a float between 0 and 1. Normally this will tell you how many tasks have been completed but if you want finer-tuned progress polling you can override the progress for a certain task. To do so, add two new variables called `total_progress` and `progress`. `total_progress` should stay static during execution and should contain the maximum amount of progress required to complete the task. `progress` contains the amount of progress completed within the task. Using the previous example, this would look like:
+```
+[...omitted...]
+
+var progress = 0
+var total_progress = 2
+
+func _run():
+    output1 = input1 + input2
+    progess += 1
+    output2 = input1 - input2
+    progress += 1
+
+[...omitted...]
+```
