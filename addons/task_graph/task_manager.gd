@@ -20,6 +20,8 @@ var _outputs_left
 
 var thread_pool
 
+var nodes
+
 func start():
 	if resource == null:
 		printerr("No resource available! Could not start.")
@@ -27,7 +29,7 @@ func start():
 	
 	_outputs_left = _outputs.size()
 	
-	var nodes = []
+	nodes = []
 	for node in resource.nodes:
 		if node["type"] == TaskGraphData.TASK_NODE:
 			nodes.append(Task.new(self, load(node["data"]).new()))
@@ -44,7 +46,7 @@ func start():
 	
 	var start_nodes = []
 	for node in nodes:
-		if node.inputs_needed == 0:
+		if not "inputs_needed" in node or node.inputs_needed == 0:
 			start_nodes.append(node)
 	
 	thread_pool = ThreadPool.new(min(nodes.size(), max_threads if max_threads != 0 else OS.get_processor_count() * 2))
@@ -80,14 +82,31 @@ func get_output(key):
 	return _outputs[key]
 
 func get_progress():
-	pass
+	var progress = 0.0
+	var total_progress = 0.0
+	for node in nodes:
+		var node_total = node.get_total_progress()
+		total_progress += node_total
+		if node.status == STATUS_RUNNING:
+			progress += node.get_progress()
+		elif node.status == STATUS_FINISHED:
+			progress += node_total
+	return progress / total_progress
 
 
 
 
 
+
+enum TaskStatus{
+	STATUS_WAITING
+	STATUS_RUNNING
+	STATUS_FINISHED
+}
 
 class Task extends Reference:
+	var status = STATUS_WAITING
+	
 	var inputs_needed = 0
 	var outputs = []
 	
@@ -108,12 +127,21 @@ class Task extends Reference:
 		mutex.unlock()
 	
 	func _run():
+		status = STATUS_RUNNING
 		task._run()
+		status = STATUS_FINISHED
 		for output in outputs:
 			output[1].add_input(output[2], task.get(output[0]))
+	
+	func get_progress():
+		return task.progress if "progress" in task else 0
+	
+	func get_total_progress():
+		return task.total_progress if "total_progress" in task else 1
 
 class InputTask extends Reference:
-	var inputs_needed = 0
+	var status = STATUS_WAITING
+	
 	var outputs = []
 	
 	var outer
@@ -122,10 +150,20 @@ class InputTask extends Reference:
 		outer = p_outer
 	
 	func _run():
+		status = STATUS_RUNNING
 		for output in outputs:
 			output[1].add_input(output[2], outer._inputs[output[0]])
+		status = STATUS_FINISHED
+	
+	func get_progress():
+		return 1 if status == STATUS_FINISHED else 0
+	
+	func get_total_progress():
+		return 1
 
 class OutputTask extends Reference:
+	var status = STATUS_WAITING
+	
 	var inputs_needed = 0
 	
 	var outer
@@ -134,7 +172,15 @@ class OutputTask extends Reference:
 		outer = p_outer
 	
 	func add_input(input_name, value):
+		status = STATUS_RUNNING
 		outer.call_deferred("_set_output", input_name, value)
+		status = STATUS_FINISHED
+	
+	func get_progress():
+		return 1 if status == STATUS_FINISHED else 0
+	
+	func get_total_progress():
+		return 1
 
 func _set_output(output_name, value):
 	_outputs[output_name] = value

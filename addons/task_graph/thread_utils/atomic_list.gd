@@ -25,8 +25,24 @@ func pop_back():
 	_mutex.unlock()
 	return value
 
+func erase(value):
+	_mutex.lock()
+	_list.erase(value)
+	_mutex.unlock()
+
 func get(idx):
-	pass
+	_mutex.lock()
+	var value = _list[idx]
+	_mutex.unlock()
+	return value
 
 func set(idx, value):
-	pass
+	_mutex.lock()
+	_list[idx] = value
+	_mutex.unlock()
+
+func size():
+	_mutex.lock()
+	var size = _list.size()
+	_mutex.unlock()
+	return size

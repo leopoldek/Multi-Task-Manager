@@ -22,6 +22,10 @@ func _ready():
 	
 	
 	$TaskManager.start()
+	
+	while true:
+		yield(get_tree().create_timer(1), "timeout")
+		print("Progress: %5.1f%%" % ($TaskManager.get_progress() * 100.0))
 
 func output_ready(output, value):
 	print("From Output: " + value)
